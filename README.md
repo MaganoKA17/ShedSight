@@ -41,7 +41,7 @@ shedsight/
 |   └── schema.sql
 └── README.md
 
-### Setup
+## Setup
 
 1. Clone the repo
 ```Bash
