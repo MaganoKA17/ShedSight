@@ -40,3 +40,35 @@ shedsight/
 ├── sql
 |   └── schema.sql
 └── README.md
+
+### Setup
+
+1. Clone the repo
+```Bash
+git clone git@github.com:YOURUSERNAME/shedsight.git
+```
+
+2. Install Dependencies
+```Bash
+pip install supabase requests python-dotenv google-generativeai
+```
+
+3. Create your .env file
+```Bash
+cp .env.example .env
+```
+
+4. Run the pipeline
+```Bash
+cd pipeline
+python3 ingestion.py
+python3 transform.py
+```
+
+## Data Source
+
+Data was ourced from Eskom Open Data Portal, specifically the hourly and weekly UCLF + OCLF outage datasets.
+
+## Author
+
+Kgosi-E-tsile Magano
