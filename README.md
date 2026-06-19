@@ -5,7 +5,7 @@ surface insights that raw schedules cannot show you.
 
 ## Problem Statement
 
-South Africans lack a clear, data-driven picture of how load shedding affects their lives over time. ShedSight solves this y building a pipeline that collects, transformsand analyzes real Eskom data.
+South Africans lack a clear, data-driven picture of how load shedding affects their lives over time. ShedSight solves this by building a pipeline that collects, transforms and analyzes real Eskom data.
 
 ## Features
 - Ingests real Eskom outage data (hourly and weekly)
