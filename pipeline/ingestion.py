@@ -1,11 +1,12 @@
 import requests
+import json
 from supabase import create_client
-from config import SUPABASE_URL, SUPABASE_KEY, ESKOMPUSH_API_KEY
+from config import SUPABASE_URL, SUPABASE_KEY, ESKOMSEPUSH_API_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 BASE_URL = "https://developer.sepush.co.za/business/2.0"
-HEADERS = {"Token" : ESKOMPUSH_API_KEY}
+HEADERS = {"Token" : ESKOMSEPUSH_API_KEY}
 
 def get_area_schedule(area_id):
     response = requests.get(f"{BASE_URL}/area", headers=HEADERS, params= {"id": area_id})
@@ -22,9 +23,11 @@ def save_raw_outage(area_id, area_name, stage, schedule):
     print(f"Saved raw data for {area_name}")
 
 def run_ingestion(areas):
+    
     for area in areas:
         print(f"Fetching data for {area['name']}...")
         data = get_area_schedule(area['id'])
+        print(f"Raw response: {data}")
 
         if "schedule" in data:
             stage = data["schedule"]["current"]["stage"] if "current" in data["schedule"] else 0
@@ -39,10 +42,26 @@ def run_ingestion(areas):
             print(f"No schedule data for {area['name']}")
 
 if __name__ == "__main__":           
-    areas = [
-        {"id" : "eskde-10-highburyeextjohannesburg",
-          "name": "Highbury, Johannesburg" },
-        {"id" : "eskde-4-fourwayseextjohannesburg",
-          "name": "Fourways, Johannesburg" }
-    ]
-    run_ingestion(areas)
+    # areas = [
+    #     {
+    #         "id" : "eskde-10-highburyeextjohannesburg",
+    #         "name": "Highbury, Johannesburg",
+    #     },
+    #     {
+    #         "id" : "eskde-4-fourwayseextjohannesburg",
+    #         "name": "Fourways, Johannesburg",
+    #     },
+    # ]
+    # run_ingestion(areas)
+    response = requests.get(
+        f"{BASE_URL}/status",
+        headers=HEADERS,
+        # params={"lat": "-26.2041", "lon":"28.0473"}
+    )
+    data = response.json()
+
+    with open("status_output.json", "w") as file:
+        json.dump(data, file, indent=2)
+    print("Output saved to status_output.json")
+    # print(response.json())
+    
