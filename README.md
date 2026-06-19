@@ -67,7 +67,7 @@ python3 transform.py
 
 ## Data Source
 
-Data was ourced from Eskom Open Data Portal, specifically the hourly and weekly UCLF + OCLF outage datasets.
+Data was sourced from Eskom Open Data Portal, specifically the hourly and weekly UCLF + OCLF outage datasets.
 
 ## Author
 
