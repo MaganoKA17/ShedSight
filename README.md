@@ -38,5 +38,5 @@ shedsight/
 │   ├── transform.py
 │   └── weekly_unplanned_outages.csv
 ├── sql
-    └── schema.sql
+|   └── schema.sql
 └── README.md
