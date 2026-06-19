@@ -17,3 +17,21 @@ def load_hourly_wages(filepath):
             }
             supabase.table("raw_hourly_outages").insert(data).execute()
             print(f"Inserted row for {row['DataTimeHourBeginning']}")
+
+def load_weekly_outages(filepath):
+    with open(filepath, "r") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            data = {
+                "week_date" : row["Week_min_DateKey"],
+                "min_uclf_oclf" : float(row["Min of UCLF + OCLF"]),
+                "avg_uclf_oclf" : float(row["Average of UCLF + OCLF"]),
+                "max_uclf_oclf" : float(row["Max of UCLF + OCLF"]),
+            }
+            supabase.table("raw_weekly_outages").insert(data).execute()
+            print(f"Inserted row for {row['Week_min_DateKey']}")
+
+if __name__ == "__main__":
+    load_hourly_outages("hourly_outages.csv")
+    load_weekly_outages("weekly_outages.csv")
