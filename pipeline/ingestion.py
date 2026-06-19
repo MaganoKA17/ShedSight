@@ -20,3 +20,20 @@ def save_raw_outage(area_id, area_name, stage, schedule):
     }
     supabase.table("raw_outages").insert(data).execute()
     print(f"Saved raw data for {area_name}")
+
+def run_ingestion(areas):
+    for area in areas:
+        print(f"Fetching data for {area['name']}...")
+        data = get_area_schedule(area['id'])
+
+        if "schedule" in data:
+            stage = data["schedule"]["current"]["stage"] if "current" in data["schedule"] else 0
+
+            save_raw_outage(
+                area_id=area['id'],
+                area_name=area['name'],
+                stage = int(stage),
+                schedule =data["schedule"]
+            ) 
+        else:
+            print(f"No schedule data for {area['name']}")
