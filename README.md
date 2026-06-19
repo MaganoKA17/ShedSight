@@ -1,7 +1,7 @@
 # ShedSight
 
 A data analytics application that tracks, stores, and analyzes South African load shedding data, and uses AI to
-surface insightsthat raw schedules cannot show you.
+surface insights that raw schedules cannot show you.
 
 ## Problem Statement
 
