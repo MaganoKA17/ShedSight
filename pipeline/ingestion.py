@@ -37,3 +37,12 @@ def run_ingestion(areas):
             ) 
         else:
             print(f"No schedule data for {area['name']}")
+
+if __name__ == "__main__":           
+    areas = [
+        {"id" : "eskde-10-highburyeextjohannesburg",
+          "name": "Highbury, Johannesburg" },
+        {"id" : "eskde-4-fourwayseextjohannesburg",
+          "name": "Fourways, Johannesburg" }
+    ]
+    run_ingestion(areas)
