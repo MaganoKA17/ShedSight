@@ -33,12 +33,6 @@ def load_weekly_outages(filepath):
             print(f"Inserted row for {row['Week_min_DateKey']}")
 
 if __name__ == "__main__":
-    # load_hourly_outages("hourly_outages.csv")
+    load_hourly_outages("hourly_outages.csv")
     load_weekly_outages("weekly_outages.csv")
-    # result = supabase.table("raw_hourly_outages").select("*").execute()
-    # print(f"Connection test: {result}")
-    # print(f"Supabase URL: {SUPABASE_URL}")
-    # print(f"Supabase Key: {SUPABASE_KEY[:20]}...")
-    # with open("weekly_outages.csv", "r") as f:
-    #     reader = csv.DictReader(f)
-    #     print(reader.fieldnames)
+    
