@@ -1,7 +1,7 @@
 import os
 import csv
 from supabase import create_client
-from config import SUPABASE_URL, SUPABASE_KEY, ESKOMSEPUSH_API_KEY
+from config import SUPABASE_URL, SUPABASE_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
