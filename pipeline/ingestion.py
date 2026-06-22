@@ -5,7 +5,7 @@ from config import SUPABASE_URL, SUPABASE_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-def load_hourly_wages(filepath):
+def load_hourly_outages(filepath):
     with open(filepath, "r") as file:
         reader = csv.DictReader(file)
 
