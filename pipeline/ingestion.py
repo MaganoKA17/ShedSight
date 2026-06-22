@@ -11,12 +11,12 @@ def load_hourly_outages(filepath):
 
         for row in reader:
             data = {
-                "datetim_key": row["DateTimeKey"],
-                "datetime_hour_beginning" : row["DateTimeHourBeginning"],
-                "hourly_uclf_oclf" : float(row["Hourly UCLF + OCLF"])
+                "datetime_key": row["DateTimeKey"],
+                "datetime_hour_beginning" : row["Date Time Hour Beginning"],
+                "hourly_uclf_oclf" : float(row["Hourly UCLF+OCLF"])
             }
             supabase.table("raw_hourly_outages").insert(data).execute()
-            print(f"Inserted row for {row['DataTimeHourBeginning']}")
+            print(f"Inserted row for {row['Date Time Hour Beginning']}")
 
 def load_weekly_outages(filepath):
     with open(filepath, "r") as file:
@@ -35,3 +35,7 @@ def load_weekly_outages(filepath):
 if __name__ == "__main__":
     load_hourly_outages("hourly_outages.csv")
     load_weekly_outages("weekly_outages.csv")
+    # result = supabase.table("raw_hourly_outages").select("*").execute()
+    # print(f"Connection test: {result}")
+    # print(f"Supabase URL: {SUPABASE_URL}")
+    # print(f"Supabase Key: {SUPABASE_KEY[:20]}...")
