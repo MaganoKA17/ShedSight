@@ -17,14 +17,17 @@ def transform_hourly_to_daily():
 
     df["date"] = df["datetime_hour_beginning"].dt.date
 
+    ESKOM_TOTAL_CAPACITY = 44000
+    HIGH_STRESS_THRESHOLD = 10500
+
     daily = df.groupby("date").agg(
         avg_uclf_oclf=("hourly_uclf_oclf", "mean"),
         max_uclf_oclf=("hourly_uclf_oclf", "max"),
-        high_stress_hours=("hourly_uclf_oclf", lambda x: (x < 30).sum())
+        high_stress_hours=("hourly_uclf_oclf", lambda x: (x > HIGH_STRESS_THRESHOLD).sum())
     ).reset_index()
 
-    daily["avg_uclf_oclf"] = daily["avg_uclf_oclf"].round(4)
-    daily["max_uclf_oclf"] = daily["max_uclf_oclf"].round(4)
+    daily["avg_uclf_oclf"] = (daily["avg_uclf_oclf"] / ESKOM_TOTAL_CAPACITY * 100).round(2)
+    daily["max_uclf_oclf"] = (daily["max_uclf_oclf"] / ESKOM_TOTAL_CAPACITY * 100).round(2)
 
     print(daily)
 
