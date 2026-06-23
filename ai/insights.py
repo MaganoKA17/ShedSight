@@ -1,13 +1,12 @@
-import google.generativeai as genai
+from google import genai
 from supabase import create_client
 import sys
 sys.path.append("../pipeline")
 from config import SUPABASE_URL, SUPABASE_KEY, GEMINI_API_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+client = genai.Client(api_key=GEMINI_API_KEY)
 
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.0-flash")
 
 def fetch_daily_summaries():
     result = supabase.table("daily_outage_summary").select("*").order("date").execute()
@@ -37,7 +36,11 @@ def generate_insights(data_str):
     3. Any patterns or trends you notice
     4. What this means for ordinary South Africans
     """
-    response = model.generate_content(prompt)
+    
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
     return response.text
 
 if __name__ == "__main__":
