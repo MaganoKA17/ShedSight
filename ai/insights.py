@@ -7,7 +7,6 @@ from config import SUPABASE_URL, SUPABASE_KEY, GEMINI_API_KEY
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-
 def fetch_daily_summaries():
     result = supabase.table("daily_outage_summary").select("*").order("date").execute()
     return result.data
