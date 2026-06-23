@@ -1,5 +1,24 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
+import {
+  LineChart, Line, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid,
+  Tooltip, ResponseConatiner
+} from "recharts"
+
+function StatCard({ title, value, subtitle }){
+  return (
+    <div style={{
+      background: "#1e1e2e", borderRadius: "12px",
+      padding: "20px", flex : 1, minWidth: "150px"
+
+    }}>
+      <p style={{color: "#888", margin: 0 }}>{title}</p>
+      <h2 style={{ color: "#fff", margin: "8px 0"}}>{value}</h2>
+      <p style={{color: "#888", margin: 0, fontSize: "12px" }}>{subtitle}</p>
+    </div>
+  )
+}
 
 function App(){
   const [ data, setData] = useState([])
@@ -22,7 +41,11 @@ function App(){
     fetchData()
   }, [])
 
-  if (loading) return <p>Loading ShedSight data...</p>
+  if (loading) return( 
+  <div style= {{ color: "#fff", textAlign : "center", marginTop: "100px" }}>
+    Loading ShedSight data...
+  </div>
+)
 
   return(
     <div>
