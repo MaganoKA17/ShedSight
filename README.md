@@ -34,18 +34,21 @@ South Africans lack a clear, data-driven picture of how load shedding affects th
 ## Project Structure
 
 shedsight/
-├── ai
+├── ai/
 │   └── insights.py
-├── frontend
-├── pipeline
-│   ├── __pycache__
+├── frontend/
+│   └── src/
+│       ├── App.jsx
+│       └── supabaseClient.js
+├── pipeline/
 │   ├── config.py
-│   ├── hourly_UCLF_and_OCLF_trend.csv
-│   ├── ingestion.py 
+│   ├── ingestion.py
 │   ├── transform.py
-│   └── weekly_unplanned_outages.csv
-├── sql
-|   └── schema.sql
+│   ├── hourly_outages.csv
+│   └── weekly_outages.csv
+├── sql/
+│   └── schema.sql
+├── .env.example
 └── README.md
 
 ## Setup
