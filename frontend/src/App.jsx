@@ -91,7 +91,7 @@ function App() {
       color: "#fff", fontFamily: "sans-serif", padding: "32px"
     }}>
      
-      <h1 style={{ fontSize: "28px", marginBottom: "4px" }}>⚡ ShedSight</h1>
+      <h1 style={{ fontSize: "28px", marginBottom: "4px" }}>ShedSight</h1>
       <p style={{ color: "#888", marginBottom: "24px" }}>
         South African Grid Stress Analytics — Last 14 Days
       </p>
