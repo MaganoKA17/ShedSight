@@ -1,2 +1,4 @@
 .env
-__pycahce__/
+__pycache__/
+node_modules/
+*.__pycache__EOF
