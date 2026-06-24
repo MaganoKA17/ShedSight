@@ -35,7 +35,7 @@ South Africans lack a clear, data-driven picture of how load shedding affects th
 | Version Control | Git + GitHub |
 
 ## Project Structure
-
+```
 shedsight/
 ├── ai/
 │   └── insights.py
@@ -53,6 +53,7 @@ shedsight/
 │   └── schema.sql
 ├── .env.example
 └── README.md
+```
 
 ## Data Explanation
 
