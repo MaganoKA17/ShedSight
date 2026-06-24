@@ -22,7 +22,7 @@ def format_data(summaries):
 
     for row in summaries:
         lines.append(
-            f"{row['date']} | {row['avg_uclf_oclf']}% | {row['max_uclf-oclf']}% | {row['high_stress_hours']} hrs"
+            f"{row['date']} | {row['avg_uclf_oclf']}% | {row['max_uclf_oclf']}% | {row['high_stress_hours']} hrs"
         )
         return "\n".join(lines)
     
