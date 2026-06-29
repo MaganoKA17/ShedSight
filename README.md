@@ -72,7 +72,9 @@ percentages indicate more severe load shedding conditions.
 
 The pipeline is scheduled to run every Monday at 6am using a cron job:
 
+```Bash
 0 6 * * 1 cd /home/wtc/Documents/ShedSight/pipeline && python3 ingestion.py && python3 transform.py
+```
 
 This ensures the dashboard always reflects the latest 14 days of Eskom data.
 To set it up on your machine run `crontab -e` and add the line above.
