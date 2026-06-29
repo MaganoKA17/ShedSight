@@ -97,19 +97,23 @@ cp .env.example .env
 ```
 Fill in your keys in '.env'
 
-### 4. Run the pipeline
+### 4. Refreshing Data
+Download the latest CSVs from the [Eskom Open Data Portal](https://www.eskom.co.za/dataportal) 
+and replace the files in the `pipeline/` folder, then rerun the pipeline.
+
+### 5. Run the pipeline
 ```Bash
 cd pipeline
 python3 ingestion.py
 python3 transform.py
 ```
-### 5. Start the Flask API
+### 6. Start the Flask API
 ```Bash
 cd api
 python3 app.py
 ```
 
-### 6. Run the frontend
+### 7. Run the frontend
 ```Bash
 cd frontend
 npm install

@@ -4,6 +4,14 @@ from config import SUPABASE_URL, SUPABASE_KEY
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+def clear_old_data():
+
+    print("Clearing old data...")
+    supabase.table("raw_hourly_outages").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
+    supabase.table("raw_weekly_outages").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
+    supabase.table("daily_outage_summary").delete().neq("id", "00000000-0000-0000-0000-000000000000").execute()
+    print("Old data cleared!")
+
 def load_hourly_outages(filepath):
     
     print("Reading hourly outages CSV...")
@@ -65,6 +73,7 @@ def load_weekly_outages(filepath):
     print(f"{len(df)} weekly rows inserted into Supabase")
 
 if __name__ == "__main__":
+    clear_old_data()
     load_hourly_outages("hourly_outages.csv")
     load_weekly_outages("weekly_outages.csv")
     
