@@ -69,15 +69,32 @@ percentages indicate more severe load shedding conditions.
 | High Stress Hours | Hours where capacity loss exceeded 20,500 MW |
 
 ## Automated Pipeline
-
-The pipeline is scheduled to run every Monday at 6am using a cron job:
+The pipeline is fully automated using a cron job that runs every Monday at 6am:
 
 ```Bash
-0 6 * * 1 cd /home/wtc/Documents/ShedSight/pipeline && python3 ingestion.py && python3 transform.py
+0 6 * * 1 cd /path/to/shedsight/pipeline && python3 download.py && python3 ingestion.py && python3 transform.py
+```
+### What happens automatically every Monday:
+1. `download.py` — fetches the latest CSVs directly from the Eskom Open Data Portal
+2. `ingestion.py` — clears old data and loads fresh CSV data into Supabase
+3. `transform.py` — aggregates hourly data into daily summaries
+
+To set it up on your machine:
+```bash
+crontab -l > /tmp/mycron
+echo "0 6 * * 1 cd /path/to/shedsight/pipeline && python3 download.py && python3 ingestion.py && python3 transform.py" >> /tmp/mycron
+crontab /tmp/mycron
 ```
 
-This ensures the dashboard always reflects the latest 14 days of Eskom data.
-To set it up on your machine run `crontab -e` and add the line above.
+## Refreshing Data Manually
+If you want to refresh data outside the scheduled run:
+```bash
+cd pipeline
+python3 download.py
+python3 ingestion.py
+python3 transform.py
+```
+
 ## Setup
 
 ### 1. Clone the repo
