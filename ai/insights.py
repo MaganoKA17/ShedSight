@@ -11,7 +11,7 @@ def fetch_daily_summaries():
     result = supabase.table("daily_outage_summary").select("*").order("date").execute()
     return result.data
 
-def format_data_for_gemini(summaries):
+def format_data_for_groq(summaries):
     lines = ["Date | Avg Stress % | Max Stress % | High Stress Hours"]
     lines.append("-" * 60)
     for row in summaries:
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     print("Fetching daily summaries...")
     summaries = fetch_daily_summaries()
 
-    print("Formatting data for Gemini...")
-    data_str = format_data_for_gemini(summaries)
+    print("Formatting data for Groq...")
+    data_str = format_data_for_groq(summaries)
 
     print("Generating AI insights...")
     insights = generate_insights(data_str)
