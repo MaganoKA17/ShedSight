@@ -130,7 +130,7 @@ function App() {
     }}>
     
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
-        <h1 style={{ fontSize: "28px", margin: 0, color: theme.accent }}>⚡ ShedSight</h1>
+        <h1 style={{ fontSize: "28px", margin: 0, color: theme.accent }}>ShedSight</h1>
         <button
           onClick={() => setDarkMode(!darkMode)}
           style={{
