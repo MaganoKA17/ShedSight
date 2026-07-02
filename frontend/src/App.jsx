@@ -180,9 +180,7 @@ function App() {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" stroke={theme.border} />
-              {/* <XAxis dataKey="date" stroke={theme.subtext} tick={{ fontSize: 11 }} /> */}
              <XAxis dataKey="date" stroke={theme.subtext} tick={{ fontSize: 10, angle: -45, textAnchor: "end" }} height={60}interval={0}/>
-
               <YAxis stroke={theme.subtext} />
               <Tooltip contentStyle={{ background: theme.tooltip, border: `1px solid ${theme.border}`, color: theme.text }} />
               <Line type="monotone" dataKey="avg_uclf_oclf" stroke={theme.chartColor} strokeWidth={2} dot={false} name="Avg Stress %" />
