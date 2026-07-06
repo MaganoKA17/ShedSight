@@ -12,7 +12,7 @@ def clear_old_data():
 
 def load_hourly_outages(filepath):
     """Read hourly outage CSV using Pandas and insert into Supabase"""
-    print("⏳ Reading hourly outages CSV...")
+    print("Reading hourly outages CSV...")
     df = pd.read_csv(filepath)
 
     df = df.rename(columns={

@@ -147,9 +147,8 @@ python3 ingestion.py
 python3 transform.py
 ```
 
-Note: Eskom updates their CSV URLs monthly. If downloads fail, visit the
-[Eskom Open Data Portal](https://www.eskom.co.za/dataportal) to get the
-latest download URLs and update them in `pipeline/download.py`.
+Note: `download.py` automatically scrapes the Eskom data portal to find 
+the latest CSV URL — no manual URL updates needed when Eskom changes their links.
 
 ## Author
 Kgosi-E-tsile Magano
