@@ -152,4 +152,4 @@ Note: Eskom updates their CSV URLs monthly. If downloads fail, visit the
 latest download URLs and update them in `pipeline/download.py`.
 
 ## Author
-Kgosi-E-tsile Magano — 
+Kgosi-E-tsile Magano
