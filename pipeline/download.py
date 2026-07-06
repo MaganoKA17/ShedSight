@@ -1,12 +1,12 @@
 import requests
 import os
 
-HOURLY_URL = "https://www.eskom.co.za/dataportal/wp-content/uploads/2026/06/Hourly_UCLF_and_OCLF_Trend.csv"
-WEEKLY_URL = "https://www.eskom.co.za/dataportal/wp-content/uploads/2026/06/Weekly_unplanned_outages.csv"
+HOURLY_URL = "https://www.eskom.co.za/dataportal/wp-content/uploads/2026/07/Hourly_UCLF_and_OCLF_Trend.csv"
+WEEKLY_URL = "https://www.eskom.co.za/dataportal/wp-content/uploads/2026/07/Weekly_UCLF_and_OCLF_Frequency.csv"
 
 def download_csv(url, filename):
    
-    print(f"⏳ Downloading {filename}...")
+    print(f"Downloading {filename}...")
     response = requests.get(url)
     if response.status_code == 200:
         with open(filename, "wb") as f:
