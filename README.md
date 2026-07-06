@@ -1,4 +1,4 @@
-# ⚡ ShedSight
+# ShedSight
 
 A data analytics application that tracks, stores, and analyzes South African 
 load shedding data — and uses AI to surface insights that raw schedules can't show you.
@@ -16,7 +16,8 @@ with AI-generated insights.
 - Researchers and journalists studying load shedding impacts
 
 ## Features
-- Ingests real Eskom outage data (hourly and weekly) using Pandas
+
+- Ingests real Eskom hourly outage data using Pandas
 - Stores raw and transformed data in Supabase (PostgreSQL)
 - Transforms raw hourly MW data into meaningful daily percentage summaries
 - Interactive React dashboard with line charts, bar charts, and stat cards
@@ -49,11 +50,10 @@ shedsight/
 │       └── supabaseClient.js   # Supabase connection
 ├── pipeline/
 │   ├── config.py               # Environment variable loader
-│   ├── download.py             # Downloads latest CSVs from Eskom
+│   ├── download.py             # Downloads latest hourly CSV from Eskom
 │   ├── ingestion.py            # Loads CSV data into Supabase using Pandas
 │   ├── transform.py            # Aggregates raw data into daily summaries
-│   ├── hourly_outages.csv      # Hourly UCLF+OCLF data from Eskom
-│   └── weekly_outages.csv      # Weekly UCLF+OCLF data from Eskom
+│   └── hourly_outages.csv      # Hourly UCLF+OCLF data from Eskom
 ├── sql/
 │   └── schema.sql              # Supabase table definitions
 ├── .env.example                # Environment variable template
@@ -77,12 +77,12 @@ load shedding conditions.
 ## Automated Pipeline
 The pipeline is fully automated using a cron job that runs every Monday at 6am:
 
-```Bash
+```bash
 0 6 * * 1 cd /path/to/shedsight/pipeline && python3 download.py && python3 ingestion.py && python3 transform.py
 ```
 
 ### What happens automatically every Monday:
-1. `download.py` — fetches the latest CSVs directly from the Eskom Open Data Portal
+1. `download.py` — fetches the latest hourly CSV from the Eskom Open Data Portal
 2. `ingestion.py` — clears old data and loads fresh CSV data into Supabase
 3. `transform.py` — aggregates hourly data into daily summaries
 
@@ -111,10 +111,10 @@ pip install supabase pandas groq flask flask-cors python-dotenv
 cp .env.example .env
 ```
 Fill in your keys in `.env`:
-```Bash
-SUPABASE_URL=
-SUPABASE_KEY=
-GROQ_API_KEY=
+```bash
+SUPABASE_URL= your_supabase_url
+SUPABASE_KEY= your_supabase_database_key
+GROQ_API_KEY= your_groq_api_key
 ```
 
 ### 4. Run the pipeline
