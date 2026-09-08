@@ -81,6 +81,8 @@ function App() {
   const [insights, setInsights] = useState("")
   const [insightsLoading, setInsightsLoading] = useState(false)
   const [darkMode, setDarkMode] = useState(true)
+  const [predictions, setPredictions] = useState([])
+  const [hasWarnings, setHasWarnings] = useState(false)
 
   const theme = darkMode ? DARK : LIGHT
 
@@ -94,7 +96,20 @@ function App() {
       else setData(data)
       setLoading(false)
     }
+
+    async function fetchPredictions() {
+      try {
+        const resposnse = await fetch("http://127.0.0.1:5000/predictions")
+        const data = await response.json()
+        setPredictions(data.warnings)
+        setHasWarnings(data.has_warnings)
+      }catch (error){
+        console.error("Error fetching predictions:", error)
+      }
+      
+    }
     fetchData()
+    fetchPredictions()
   }, [])
 
   const fetchInsights = async () => {
@@ -165,6 +180,29 @@ function App() {
       {activeTab === "Overview" && (
         <div>
           <h2 style={{ marginBottom: "24px", color: theme.text }}>Overview</h2>
+
+          {/* Warning Banner */}
+          {hasWarnings && (
+            <div style={{
+              background: "#ff6b00", borderRadius: "12px",
+              padding: "16px 24px", marginBottom: "24px",
+              display: "flex", alignItems: "center", gap: "12px"
+            }}>
+              <span style={{ fontSize: "24px" }}>⚠️</span>
+              <div>
+                <p style={{ margin: 0, fontWeight: "500", color: "#fff", fontSize: "15px" }}>
+                  Grid Stress Alert
+                </p>
+                <p style={{ margin: "4px 0 0 0", color: "#fff", fontSize: "13px" }}>
+                  High or medium grid stress predicted in the next 24 hours at:{" "}
+                  {predictions.map(p => new Date(p.predicted_hour).getHours() + ":00").join(", ")}
+                  . Consider charging devices and preparing backup power.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Stat Cards */}
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
             <StatCard title="Avg Grid Stress" value={`${avgStress}%`} subtitle="UCLF+OCLF average" theme={theme} valueColor={theme.accent} />
             <StatCard title="Worst Day" value={worstDay.date} subtitle={`${worstDay.max_uclf_oclf}% max stress`} theme={theme} valueColor={theme.accent2} />
