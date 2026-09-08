@@ -152,3 +152,6 @@ the latest CSV URL — no manual URL updates needed when Eskom changes their lin
 
 ## Author
 Kgosi-E-tsile Magano
+
+## Verification Code:
+WTC-CY28J9UG
