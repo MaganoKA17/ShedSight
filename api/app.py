@@ -61,5 +61,18 @@ def get_insights():
     insights = response.choices[0].message.content
     return jsonify({"insights": insights})
 
+@app.route("/predictions", methods=["GET"])
+def get_predictions():
+    result = supabase.table("predictions").select("*").order("predicted_hour").execute()
+    predictions = result.data
+
+    warnings = [p for p in predictions if p["risk_level"] in ["High", "Medium"]]
+
+    return jsonify({
+        "predictions": predictions,
+        "warnings": warnings,
+        "has_warnings": len(warnings) > 0
+    })
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
