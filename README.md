@@ -150,6 +150,15 @@ python3 transform.py
 Note: `download.py` automatically scrapes the Eskom data portal to find 
 the latest CSV URL — no manual URL updates needed when Eskom changes their links.
 
+## Current Data Status
+As of mid-2026, South Africa has had experienced over 341 consecutive days without load shedding following Eskom's Grid
+Recovery Plan. As a result, the Eskom data portal is not publishing fresh outage data at the same frequency as 
+previous years.
+
+The pipeline currently uses the most recent available dataset (June-July 2026) which captures the tail end of the last 
+period of grid stress. The pipeline and prediction model are fully functional and will automatically ingest fresh data 
+when Eskom resumes publishing data hourly outage metrics.
+
 ## Author
 Kgosi-E-tsile Magano
 
