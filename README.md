@@ -53,6 +53,7 @@ shedsight/
 │   ├── download.py             # Downloads latest hourly CSV from Eskom
 │   ├── ingestion.py            # Loads CSV data into Supabase using Pandas
 │   ├── transform.py            # Aggregates raw data into daily summaries
+│   ├── predict.py              # Trains model and generate 24-hour predictions
 │   └── hourly_outages.csv      # Hourly UCLF+OCLF data from Eskom
 ├── sql/
 │   └── schema.sql              # Supabase table definitions
