@@ -28,39 +28,43 @@ def format_data(summaries):
     
 @app.route("/insights", methods=["GET"])
 def get_insights():
-    summaries = fetch_daily_summaries()
-    data_str = format_data(summaries)
+    try:
+        summaries = fetch_daily_summaries()
+        data_str = format_data(summaries)
 
-    response = client.chat.completions.create(
-        model="qwen/qwen3.8-27b",
-        max_tokens=800,
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a South African energy analyst who explains Eskom grid data in clear, simple language for everyday South Africans."
-            },
-            {
-                "role": "user",
-                "content": f"""
-                Below is 14 days of Eskom grid stress data. 
-                The stress percentage represents how much of Eskom's 
-                total capacity was unavailable due to outages. 
-                Higher values mean more load shedding risk.
-
-                {data_str}
-
-                Please provide:
-                1. A summary of overall grid health over this period
-                2. The worst and best days and what they indicate
-                3. Any patterns or trends you notice
-                4. What this means for ordinary South Africans
-                """
-            }
-        ]
+        response = client.chat.completions.create(
+            model="qwen/qwen3.8-27b",
+            max_tokens=800,
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a South African energy analyst who explains Eskom grid data in clear, simple language for everyday South Africans."
+                },
+                {
+                    "role": "user",
+                    "content": f"""
+                    Below is 14 days of Eskom grid stress data. 
+                    The stress percentage represents how much of Eskom's 
+                    total capacity was unavailable due to outages. 
+                    Higher values mean more load shedding risk.
+    
+                    {data_str}
+    
+                    Please provide:
+                    1. A summary of overall grid health over this period
+                    2. The worst and best days and what they indicate
+                    3. Any patterns or trends you notice
+                    4. What this means for ordinary South Africans
+                    """
+                }
+            ]
     )
 
-    insights = response.choices[0].message.content
-    return jsonify({"insights": insights})
+        insights = response.choices[0].message.content
+        return jsonify({"insights": insights})
+    except Exception as ex:
+        return jsonify({"error": str(ex)}), 500
+
 
 @app.route("/predictions", methods=["GET"])
 def get_predictions():
