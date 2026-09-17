@@ -10,6 +10,11 @@ def transform_hourly_to_daily():
     result = supabase.table("raw_hourly_outages").select("*").execute()
 
     df = pd.DataFrame(result.data)
+    print(f"{len(df)} rows fetched")
+
+    if df.empty:
+        print(f"No data found. Skipping transformation")
+        return
 
     df["datetime_hour_beginning"] = pd.to_datetime(df["datetime_hour_beginning"])
     df["hourly_uclf_oclf"] = pd.to_numeric(df["hourly_uclf_oclf"], errors="coerce")
