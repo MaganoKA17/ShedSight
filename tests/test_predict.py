@@ -154,3 +154,58 @@ class TestGeneratePredictions:
         predictions = generate_predictions(model)
         for p in predictions:
             assert 0 <= p["probability"] <= 1
+
+class TestFetchHistoricalData:
+
+    @patch("predict.supabase")
+    def test_fetches_data_from_supabase(self, mock_supabase):
+        """Test that fetch_historical_data returns a DataFrame"""
+        from predict import fetch_historical_data
+        mock_supabase.table.return_value.select.return_value.execute.return_value.data = [
+            {"datetime_hour_beginning": "2026-06-21 00:00:00", "hourly_uclf_oclf": 9841.604},
+            {"datetime_hour_beginning": "2026-06-21 01:00:00", "hourly_uclf_oclf": 9889.649},
+        ]
+        df = fetch_historical_data()
+        assert len(df) == 2
+        assert "datetime_hour_beginning" in df.columns
+        assert "hourly_uclf_oclf" in df.columns
+
+    @patch("predict.supabase")
+    def test_drops_null_values(self, mock_supabase):
+        """Test that null values are dropped"""
+        from predict import fetch_historical_data
+        mock_supabase.table.return_value.select.return_value.execute.return_value.data = [
+            {"datetime_hour_beginning": "2026-06-21 00:00:00", "hourly_uclf_oclf": 9841.604},
+            {"datetime_hour_beginning": None, "hourly_uclf_oclf": None},
+        ]
+        df = fetch_historical_data()
+        assert len(df) == 1
+
+
+class TestSavePredictions:
+
+    @patch("predict.supabase")
+    def test_clears_old_predictions(self, mock_supabase):
+        """Test that old predictions are cleared before saving new ones"""
+        from predict import save_predictions
+        mock_supabase.table.return_value.delete.return_value.neq.return_value.execute.return_value = None
+        mock_supabase.table.return_value.insert.return_value.execute.return_value = None
+        predictions = [
+            {"predicted_hour": "2026-09-08T15:00:00", "risk_level": "High", "probability": 0.95}
+        ]
+        save_predictions(predictions)
+        mock_supabase.table.return_value.delete.assert_called()
+
+    @patch("predict.supabase")
+    def test_inserts_all_predictions(self, mock_supabase):
+        """Test that all predictions are inserted into Supabase"""
+        from predict import save_predictions
+        mock_supabase.table.return_value.delete.return_value.neq.return_value.execute.return_value = None
+        mock_supabase.table.return_value.insert.return_value.execute.return_value = None
+        predictions = [
+            {"predicted_hour": "2026-09-08T15:00:00", "risk_level": "High", "probability": 0.95},
+            {"predicted_hour": "2026-09-08T16:00:00", "risk_level": "Low", "probability": 0.15},
+            {"predicted_hour": "2026-09-08T17:00:00", "risk_level": "Medium", "probability": 0.55},
+        ]
+        save_predictions(predictions)
+        assert mock_supabase.table.return_value.insert.call_count == 3
